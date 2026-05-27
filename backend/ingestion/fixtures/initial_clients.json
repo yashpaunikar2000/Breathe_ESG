@@ -1,0 +1,18 @@
+[
+  {
+    "model": "ingestion.client",
+    "pk": 1,
+    "fields": {
+      "name": "Contoso Consumer Goods",
+      "code": "CONTOSO"
+    }
+  },
+  {
+    "model": "ingestion.client",
+    "pk": 2,
+    "fields": {
+      "name": "Evergreen Properties",
+      "code": "EVERGREEN"
+    }
+  }
+]
