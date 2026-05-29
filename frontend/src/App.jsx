@@ -419,8 +419,8 @@ function App() {
             <div className="inspector-section">
               <span className="inspector-label">Quantities & Normalization</span>
               <span className="inspector-value" style={{ lineHeight: "1.4" }}>
-                Raw Input: <strong>{selectedRecord.quantity} {selectedRecord.quantity_unit}</strong><br/>
-                Normalized: <strong>{selectedRecord.normalized_quantity} {selectedRecord.normalized_unit}</strong>
+                Raw Input: <strong>{selectedRecord.quantity !== null && selectedRecord.quantity !== undefined ? `${selectedRecord.quantity} ${selectedRecord.quantity_unit}` : "Missing / Unparseable"}</strong><br/>
+                Normalized: <strong>{selectedRecord.normalized_quantity !== null && selectedRecord.normalized_quantity !== undefined ? `${selectedRecord.normalized_quantity} ${selectedRecord.normalized_unit}` : "Missing / Unparseable"}</strong>
               </span>
             </div>
 
