@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_BASE = import.meta.env.VITE_API_URL || "";
+
 const sourceOptions = [
   { value: "sap", label: "SAP Fuel / Procurement (Scope 1)" },
   { value: "utility", label: "Utility Electricity Portal (Scope 2)" },
@@ -21,7 +23,7 @@ function App() {
   const [uploadStatus, setUploadStatus] = useState(null); // { success: boolean, msg: string }
 
   useEffect(() => {
-    fetch("/api/clients/")
+    fetch(`${API_BASE}/api/clients/`)
       .then((res) => res.json())
       .then((data) => {
         setClients(data);
@@ -34,7 +36,7 @@ function App() {
   }, []);
 
   const fetchRecords = () => {
-    fetch("/api/records/")
+    fetch(`${API_BASE}/api/records/`)
       .then((res) => res.json())
       .then(setRecords)
       .catch(console.error);
@@ -54,7 +56,7 @@ function App() {
 
     setUploadStatus({ success: true, msg: "Processing ingestion..." });
 
-    const response = await fetch("/api/ingest/", {
+    const response = await fetch(`${API_BASE}/api/ingest/`, {
       method: "POST",
       body: data,
     });
@@ -71,7 +73,7 @@ function App() {
   };
 
   const reviewRecord = async (id, action) => {
-    const response = await fetch(`/api/records/${id}/review/`, {
+    const response = await fetch(`${API_BASE}/api/records/${id}/review/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action, reviewed_by: "sustainability_analyst@breatheesg.com" }),
