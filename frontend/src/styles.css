@@ -557,3 +557,9 @@ pre.json-payload {
     border-top: 1px solid var(--panel-border);
   }
 }
+
+/* Dropdown options color fix for standard OS browsers */
+select option {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+}
