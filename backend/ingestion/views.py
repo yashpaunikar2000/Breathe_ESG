@@ -14,9 +14,55 @@ from .serializers import ClientSerializer, EmissionRecordSerializer, ImportBatch
 
 
 def parse_float(value, default=None):
-    try:
+    if value is None:
+        return default
+    if isinstance(value, (int, float)):
         return float(value)
-    except (TypeError, ValueError):
+    
+    val_str = str(value).strip()
+    if not val_str:
+        return default
+        
+    try:
+        # Quick path for standard floats
+        return float(val_str)
+    except ValueError:
+        pass
+        
+    # Remove currency symbols or extra characters but keep negative signs
+    val_str = "".join(c for c in val_str if c.isdigit() or c in ".,-")
+    
+    if not val_str:
+        return default
+        
+    is_negative = val_str.startswith("-")
+    if is_negative:
+        val_str = val_str[1:]
+        
+    try:
+        if "." in val_str and "," in val_str:
+            if val_str.rfind(".") > val_str.rfind(","):
+                cleaned = val_str.replace(",", "")
+            else:
+                cleaned = val_str.replace(".", "").replace(",", ".")
+        elif "," in val_str:
+            parts = val_str.split(",")
+            if len(parts) == 2 and len(parts[1]) == 3:
+                cleaned = val_str.replace(",", "")
+            else:
+                cleaned = val_str.replace(",", ".")
+        elif "." in val_str:
+            parts = val_str.split(".")
+            if len(parts) == 2 and len(parts[1]) == 3:
+                cleaned = val_str.replace(".", "")
+            else:
+                cleaned = val_str
+        else:
+            cleaned = val_str
+            
+        result = float(cleaned)
+        return -result if is_negative else result
+    except Exception:
         return default
 
 
