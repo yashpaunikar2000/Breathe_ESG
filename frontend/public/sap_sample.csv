@@ -1,0 +1,4 @@
+Document,Document Date,Posting Date,Material,Plant,Quantity,UoM,Amount
+1001,2024-04-01,01.04.2024,Diesel fuel,PLANT01,1200,L,1830.00
+1002,2024-04-02,02.04.2024,Procurement service,PLANT02,15,EA,4500.00
+1003,2024-04-05,05.04.2024,Heating oil,PLANT01,850,L,1350.00

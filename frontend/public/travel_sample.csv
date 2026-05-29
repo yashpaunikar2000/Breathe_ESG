@@ -1,0 +1,4 @@
+Trip ID,Trip Date,Category,Origin,Destination,Mode,Distance (km)
+TRIP-001,2024-04-08,Flight,NYC,LON,flight,5567
+TRIP-002,2024-04-10,Hotel,NYC,NYC,hotel,0
+TRIP-003,2024-04-11,Ground,SEA,PDX,ground,278

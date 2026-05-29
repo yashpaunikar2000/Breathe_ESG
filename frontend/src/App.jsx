@@ -221,6 +221,17 @@ function App() {
                 {uploadStatus.msg}
               </div>
             )}
+
+            <div style={{ marginTop: "20px", borderTop: "1px solid rgba(255, 255, 255, 0.1)", paddingTop: "15px" }}>
+              <div style={{ fontSize: "0.85rem", opacity: 0.8, marginBottom: "8px", fontWeight: 600 }}>
+                📥 Download Sample CSV Templates for Testing:
+              </div>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <a href="/sap_sample.csv" download className="badge-scope-1" style={{ padding: "6px 12px", fontSize: "0.75rem", textDecoration: "none", borderRadius: "6px", fontWeight: 600, display: "inline-block" }}>Scope 1 (SAP)</a>
+                <a href="/utility_sample.csv" download className="badge-scope-2" style={{ padding: "6px 12px", fontSize: "0.75rem", textDecoration: "none", borderRadius: "6px", fontWeight: 600, display: "inline-block" }}>Scope 2 (Utility)</a>
+                <a href="/travel_sample.csv" download className="badge-scope-3" style={{ padding: "6px 12px", fontSize: "0.75rem", textDecoration: "none", borderRadius: "6px", fontWeight: 600, display: "inline-block" }}>Scope 3 (Travel)</a>
+              </div>
+            </div>
           </section>
 
           {/* Audit & Review Dashboard */}
