@@ -1,6 +1,34 @@
 import csv
 import io
+import math
 from datetime import datetime
+
+AIRPORTS = {
+    "JFK": (40.6398, -73.7789),
+    "NYC": (40.6398, -73.7789),
+    "LHR": (51.4700, -0.4543),
+    "LON": (51.4700, -0.4543),
+    "CDG": (49.0097, 2.5479),
+    "FRA": (50.0333, 8.5667),
+    "DXB": (25.2528, 55.3644),
+    "SIN": (1.3644, 103.9915),
+    "HND": (35.5494, 139.7798),
+    "SFO": (37.6190, -122.3749),
+    "LAX": (33.9416, -118.4085),
+    "DEL": (28.5665, 77.1031),
+    "BOM": (19.0896, 72.8656),
+    "SEA": (47.4502, -122.3088),
+    "PDX": (45.5886, -122.5975),
+}
+
+def calculate_haversine_distance(lat1, lon1, lat2, lon2):
+    R = 6371.0 # Earth radius in km
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = math.sin(dlat / 2)**2 + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    return round(R * c)
+
 
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -156,10 +184,21 @@ def parse_travel_row(row):
     destination = keys.get("destination") or keys.get("to") or ""
     mode = keys.get("mode") or ("flight" if "flight" in category else "ground")
     distance = parse_float(keys.get("distance (km)") or keys.get("distance") or keys.get("miles"))
+    
+    # Secure Airport Distance Calculations
     if distance is None and origin and destination and mode == "flight":
-        distance = 800.0
+        origin_code = origin.strip().upper()
+        dest_code = destination.strip().upper()
+        if origin_code in AIRPORTS and dest_code in AIRPORTS:
+            lat1, lon1 = AIRPORTS[origin_code]
+            lat2, lon2 = AIRPORTS[dest_code]
+            distance = float(calculate_haversine_distance(lat1, lon1, lat2, lon2))
+        else:
+            distance = 800.0
+            
     if distance is None:
         distance = 10.0
+        
     emission_factors = {"flight": 0.18, "hotel": 0.05, "ground": 0.12}
     factor = emission_factors.get(mode, 0.12)
     return {

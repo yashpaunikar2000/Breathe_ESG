@@ -400,6 +400,15 @@ function App() {
               <span className="inspector-value">{selectedRecord.activity_date || "Missing/Unparseable"}</span>
             </div>
 
+            {selectedRecord.source_type === "utility" && selectedRecord.raw_row && (
+              <div className="inspector-section">
+                <span className="inspector-label">Billing Period</span>
+                <span className="inspector-value" style={{ fontWeight: 600 }}>
+                  {selectedRecord.raw_row["Period Start"] || selectedRecord.raw_row["period start"] || "N/A"} ➔ {selectedRecord.raw_row["Period End"] || selectedRecord.raw_row["period end"] || "N/A"}
+                </span>
+              </div>
+            )}
+
             {selectedRecord.facility_code && (
               <div className="inspector-section">
                 <span className="inspector-label">Origin Facility Code / Plant</span>
